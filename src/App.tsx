@@ -1,4 +1,3 @@
-
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   AudioLines,
@@ -639,26 +638,30 @@ function App() {
   function renderStatus() {
     if (loading) {
       return (
-        <p style={{ color: "#c5a3ff", padding: "30px 0" }}>
-          <LoaderCircle
-            size={18}
-            style={{ verticalAlign: "middle", marginRight: 10 }}
-          />
-          Finding your next favorite songs...
-        </p>
+        <div className="sonora-loading" role="status" aria-live="polite" aria-label="Loading songs">
+          <div className="sonora-loading-heading"><LoaderCircle size={19} className="sonora-loading-spinner" /> TUNING INTO YOUR NEXT OBSESSION...</div>
+          <div className="sonora-skeleton-grid" aria-hidden="true">
+            {Array.from({ length: 4 }, (_, index) => (
+              <div className="sonora-skeleton-card" key={index}>
+                <div className="sonora-skeleton-cover" />
+                <div className="sonora-skeleton-line" />
+                <div className="sonora-skeleton-line short" />
+              </div>
+            ))}
+          </div>
+        </div>
       );
     }
 
     if (error) {
       return (
-        <div style={{ padding: "24px 0", color: "#d8a9c4" }}>
+        <div className="sonora-state-panel" role="alert">
+          <Radio size={31} />
+          <span className="sonora-state-kicker">SIGNAL INTERRUPTED / 404</span>
+          <h3>THE BEAT DROPPED.</h3>
           <p>{error}</p>
-          <button
-            className="primary-button"
-            onClick={() => void loadTracks(submittedSearch)}
-          >
-            <RefreshCw size={16} />
-            Try again
+          <button className="primary-button" onClick={() => void loadTracks(submittedSearch)}>
+            <RefreshCw size={16} /> TRY AGAIN ↗
           </button>
         </div>
       );
@@ -723,27 +726,25 @@ function App() {
           {navigation.map(({ name, icon: Icon }) => (
             <button
               key={name}
-              className={`nav-link ${
+              className={`nav-link ${name === "Up Next" ? "sonora-queue-upgrade" : ""} ${
                 activePage === name ? "active" : ""
               }`}
               onClick={() => navigate(name)}
             >
               <Icon size={19} />
-              {name}
+              <span>{name}</span>
+              {name === "Up Next" && <span className="sonora-queue-count">{upNext.length || "↗"}</span>}
             </button>
           ))}
         </nav>
 
         <div className="sidebar-bottom">
           <div className="fusion-sidebar-note"><span className="fusion-live-dot"/> NO SKIPS. JUST HITS. <Sparkles size={13}/></div>
-          <div className="premium-card">
-            <Disc3 size={32} />
-            <h3>Feel everything.</h3>
-            <p>
-              Every mood has a soundtrack.
-              Find yours.
-            </p>
-            <span>THE SONORA EXPERIENCE ↗</span>
+          <div className="sonora-feel-upgrade">
+            <div className="sonora-vinyl" aria-hidden="true" />
+            <h3 className="sonora-feel-title">Feel<br />everything.</h3>
+            <p className="sonora-feel-description">Every mood has a soundtrack.<br />Find yours.</p>
+            <div className="sonora-feel-decoration">THE SONORA EXPERIENCE ↗</div>
           </div>
         </div>
       </aside>
@@ -852,7 +853,7 @@ function App() {
               </div>
 
               {renderStatus()}
-              {!loading && !error && renderTrackGrid(tracks)}
+              {!loading && !error && (tracks.length ? renderTrackGrid(tracks) : <div className="sonora-state-panel"><Search size={30}/><span className="sonora-state-kicker">NOTHING ON THIS FREQUENCY</span><h3>NO TRACKS FOUND.</h3><p>Try another artist, song, or mood.</p><button className="primary-button" onClick={() => navigate("Discover")}>EXPLORE MUSIC ↗</button></div>)}
             </section>
 
             <section className="music-section mood-section">
@@ -1000,7 +1001,7 @@ function App() {
             )}
 
             {renderStatus()}
-            {!loading && !error && renderTrackGrid(tracks)}
+            {!loading && !error && (tracks.length ? renderTrackGrid(tracks) : <div className="sonora-state-panel"><Search size={30}/><span className="sonora-state-kicker">NOTHING ON THIS FREQUENCY</span><h3>NO TRACKS FOUND.</h3><p>Try another artist, song, or mood.</p><button className="primary-button" onClick={() => navigate("Discover")}>EXPLORE MUSIC ↗</button></div>)}
           </section>
         )}
 
@@ -1024,7 +1025,7 @@ function App() {
               renderTrackGrid(likedTracks)
             ) : (
               <p style={{ color: "#a99bb7", lineHeight: 1.8 }}>
-                No liked songs yet. Explore Discover and tap the
+                No favorites yet. Explore Discover and tap the
                 heart beside a track to save it here.
               </p>
             )}
@@ -1036,7 +1037,7 @@ function App() {
             <div className="section-heading"><div><span className="section-label">YOUR LISTENING JOURNEY</span><h2>Recently <em>played.</em></h2></div>
               <button className="sonora-text-action" onClick={() => setHistory([])}>Clear history</button>
             </div>
-            {historyTracks.length ? renderTrackGrid(historyTracks) : <p className="sonora-empty">Songs you play will appear here.</p>}
+            {historyTracks.length ? renderTrackGrid(historyTracks) : <div className="sonora-state-panel"><Clock3 size={30}/><span className="sonora-state-kicker">YOUR SOUNDTRACK STARTS HERE</span><h3>NO REPLAYS YET.</h3><p>Play a song and your listening history will show up here.</p><button className="primary-button" onClick={() => navigate("Discover")}>FIND A SONG ↗</button></div>}
           </section>
         )}
 
@@ -1054,7 +1055,7 @@ function App() {
                 <button title="Move down" disabled={index === upNext.length-1} onClick={() => moveQueueItem(index,1)}><ArrowDown size={17}/></button>
                 <button title="Remove" onClick={() => setUpNext(previous => previous.filter((_, i) => i !== index))}><X size={17}/></button>
               </div>
-            )) : <p className="sonora-empty">Your queue is empty. Add songs using the button beneath any track.</p>}
+            )) : <div className="sonora-state-panel"><ListMusic size={30}/><span className="sonora-state-kicker">YOUR NEXT TRACK AWAITS</span><h3>THE QUEUE IS QUIET.</h3><p>Add songs using “Add to queue” beneath any track.</p><button className="primary-button" onClick={() => navigate("Discover")}>DISCOVER TRACKS ↗</button></div>}
           </section>
         )}
 
@@ -1269,8 +1270,9 @@ function App() {
         </div>
       )}
 
-      <footer className="music-player">
+      <footer className={`music-player ${currentTrack ? "sonora-player-active" : ""}`} aria-label="Music player">
         <div className="now-playing">
+          <span className="sonora-now-playing-label">{currentTrack ? "● NOW PLAYING" : "○ READY WHEN YOU ARE"}</span>
           {currentTrack?.image ? (
             <img
               src={currentTrack.image}
@@ -1292,7 +1294,7 @@ function App() {
           )}
 
           <div style={{ minWidth: 0 }}>
-            <h4
+            <h4 aria-live="polite"
               style={{
                 overflow: "hidden",
                 textOverflow: "ellipsis",

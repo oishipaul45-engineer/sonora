@@ -1830,3 +1830,43 @@ html{scroll-behavior:smooth}body{background:var(--paper);color:var(--ink)}button
   .hero h1 { font-size: clamp(27px, 8vw, 36px); }
   .hero-visual { width: min(62%, 195px); }
 }
+
+
+/* SONORA POLISH PACK — electric muse; appended overrides */
+.navigation .sonora-queue-upgrade{background:var(--ink);color:var(--lime);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--lime);border-radius:4px;display:flex;align-items:center;gap:10px;transition:transform .2s,box-shadow .2s}
+.navigation .sonora-queue-upgrade:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--lime)}
+.navigation .sonora-queue-upgrade.active{background:var(--lime);color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.sonora-queue-count{margin-left:auto;min-width:22px;text-align:center;font-size:12px;font-weight:900}
+.sidebar-bottom{min-width:0;padding-bottom:12px}
+.sonora-feel-upgrade{position:relative;overflow:hidden;background:var(--lime);border:2px solid var(--ink);box-shadow:5px 5px 0 var(--ink);border-radius:4px;padding:20px 15px 18px;color:var(--ink);text-align:left}
+.sonora-vinyl{position:relative;width:55px;height:55px;margin-bottom:15px;border:3px solid var(--ink);border-radius:50%;background:repeating-radial-gradient(circle at center,#151515 0 3px,#303030 4px 5px,#151515 6px 9px);animation:sonora-record-turn 9s linear infinite}
+.sonora-vinyl:after{content:"";position:absolute;inset:19px;background:var(--blue);border:3px solid var(--lime);border-radius:50%}
+.sonora-feel-title{font-family:'Archivo Black',sans-serif;font-size:clamp(20px,2vw,26px);line-height:1.05;letter-spacing:-1px;margin:0 0 10px}
+.sonora-feel-description{font-size:12px;line-height:1.5;margin:0 0 14px;max-width:205px;color:#363a2c}
+.sonora-feel-decoration{border-top:2px solid var(--ink);padding-top:10px;font-size:9px;font-weight:900;letter-spacing:1px}
+@keyframes sonora-record-turn{to{transform:rotate(360deg)}}
+.music-player.sonora-player-active{border:2px solid var(--ink);box-shadow:7px 7px 0 var(--ink),0 0 0 3px rgba(218,255,76,.16)}
+.music-player.sonora-player-active .now-playing img{outline:2px solid var(--lime);outline-offset:2px}
+.now-playing{position:relative;min-width:0}
+.sonora-now-playing-label{position:absolute;top:-13px;left:0;font-size:8px;font-weight:900;letter-spacing:1px;color:var(--lime);white-space:nowrap;pointer-events:none}
+.player-controls .play-button{background:var(--lime)!important;color:var(--ink)!important;border:2px solid var(--ink)!important;box-shadow:3px 3px 0 var(--ink);transition:transform .18s,box-shadow .18s}
+.player-controls .play-button:hover{transform:translate(-2px,-2px) scale(1.04);box-shadow:5px 5px 0 var(--ink)}
+.sonora-loading{margin:22px 0 30px}
+.sonora-loading-heading{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:900;letter-spacing:1.2px;margin-bottom:18px;color:var(--ink)}
+.sonora-loading-spinner{animation:sonora-record-turn 1.5s linear infinite}
+.sonora-skeleton-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.sonora-skeleton-card{padding:10px;background:var(--paper-light,#fff9e9);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);min-width:0}
+.sonora-skeleton-cover{aspect-ratio:1;background:#cbd0bf;margin-bottom:14px}
+.sonora-skeleton-line{height:11px;width:82%;background:#cbd0bf;margin-bottom:9px}
+.sonora-skeleton-line.short{width:50%}
+.sonora-skeleton-cover,.sonora-skeleton-line{background-image:linear-gradient(100deg,#d5d9cb 15%,#eff0e5 35%,#d5d9cb 55%);background-size:200% 100%;animation:sonora-shimmer 1.5s ease-in-out infinite}
+@keyframes sonora-shimmer{to{background-position-x:-200%}}
+.sonora-state-panel{margin:24px 0 34px;padding:30px 24px;background:var(--paper-light,#fff9e9);color:var(--ink);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);max-width:100%;min-width:0}
+.sonora-state-panel>svg{color:var(--blue);margin-bottom:14px}
+.sonora-state-kicker{display:block;color:var(--blue);font-size:10px;font-weight:900;letter-spacing:1.5px}
+.sonora-state-panel h3{font-family:'Archivo Black',sans-serif;font-size:clamp(21px,3vw,31px);margin:9px 0}
+.sonora-state-panel p{max-width:420px;line-height:1.6;margin:0 0 20px}
+@media(max-width:980px){.sonora-skeleton-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.music-player{min-width:0}.now-playing h4{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+@media(max-width:700px){.sidebar{max-width:min(85vw,270px);overflow-y:auto}.sidebar-bottom{margin-top:25px}.sonora-feel-upgrade{padding:18px 14px}.main-content{min-width:0;padding-bottom:calc(155px + env(safe-area-inset-bottom))}.music-player{left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom));height:112px;min-width:0;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:48px 42px;padding:10px 12px;gap:0}.now-playing{min-width:0;overflow:hidden}.sonora-now-playing-label{display:none}.player-center{min-width:0;grid-column:1/-1;grid-row:2}.player-controls{flex-shrink:0}.progress-bar{min-width:0;flex:1}.volume-control{min-width:0}.sonora-skeleton-grid{gap:10px}.sonora-state-panel{padding:23px 16px}.sonora-state-panel h3{font-size:23px}}
+@media(max-width:390px){.music-player{padding:8px;height:110px}.player-controls{gap:6px}.progress-bar span{font-size:9px}.now-playing h4{font-size:11px}.sonora-skeleton-card{padding:6px}.sonora-state-panel{padding:18px 13px}}
+@media(prefers-reduced-motion:reduce){.sonora-vinyl,.sonora-loading-spinner,.sonora-skeleton-cover,.sonora-skeleton-line{animation:none!important}.navigation .sonora-queue-upgrade,.player-controls .play-button{transition:none!important}}
